@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 //Аннотация что-бы связать определенный путь с нашим Servlet-ом
 @WebServlet("/first")
@@ -38,9 +39,22 @@ public class FirstServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //Получение заголовков request-а.
+        //User-Agent позволяет получить информацию по устройству с которого был передан request
+        req.getHeader("user-agent");
+
+        //Указываем тип данных response
         resp.setContentType("text/html");
+        //Задаем кодировку
+        resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+        //Можем передать кодировку в качестве параметра заголовка после точки с запятой
+        //resp.setContentType("text/html; charset=UTF-8");
+
+        //Устанавливаем кастомный header
+        resp.setHeader("token", "12345");
         try (PrintWriter writer = resp.getWriter()) {
-            writer.write("<h2>Hello from <i>First Servlet</i></h2>");
+            writer.write("<h2>Привет с <i>Первого Сервлета</i></h2>");
         }
     }
 }
