@@ -7,10 +7,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.stream.Stream;
 
 //Аннотация что-бы связать определенный путь с нашим Servlet-ом
 @WebServlet("/first")
@@ -39,7 +41,7 @@ public class FirstServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         //Получаем параметр по значению
         String param = req.getParameter("param");
 
@@ -62,14 +64,29 @@ public class FirstServlet extends HttpServlet {
         resp.setHeader("token", "12345");
         try (PrintWriter writer = resp.getWriter()) {
             writer.write("<h2>Привет с <i>Первого Сервлета</i></h2>");
+        } catch (IOException e) {
+            //Логируем наше исключение, и, ни в коем случае, не пробрасываем!
+            System.out.println(e.getMessage());
         }
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        Map<String, String[]> parameterMap = req.getParameterMap();
+        //Приём параметров
+        //Map<String, String[]> parameterMap = req.getParameterMap();
+        //System.out.println(parameterMap);
 
-        System.out.println(parameterMap);
+        //Обработка Body-request
+        try (BufferedReader reader = req.getReader();
+             //Считываем построчно тело ответа
+             Stream<String> lines = reader.lines()) {
+
+            lines.forEach(System.out::println);
+
+        } catch (IOException e) {
+            //Логируем наше исключение, и, ни в коем случае, не пробрасываем!
+            System.out.println(e.getMessage());
+        }
     }
 }
