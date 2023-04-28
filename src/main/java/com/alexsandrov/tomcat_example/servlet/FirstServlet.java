@@ -46,7 +46,6 @@ public class FirstServlet extends HttpServlet {
         //Получаем все параметры
         Map<String, String[]> parameterMap = req.getParameterMap();
 
-        System.out.println();
         //Получение заголовков request-а.
         //User-Agent позволяет получить информацию по устройству с которого был передан request
         req.getHeader("user-agent");
@@ -64,5 +63,13 @@ public class FirstServlet extends HttpServlet {
         try (PrintWriter writer = resp.getWriter()) {
             writer.write("<h2>Привет с <i>Первого Сервлета</i></h2>");
         }
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        Map<String, String[]> parameterMap = req.getParameterMap();
+
+        System.out.println(parameterMap);
     }
 }
