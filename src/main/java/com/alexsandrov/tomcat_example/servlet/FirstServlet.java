@@ -74,8 +74,8 @@ public class FirstServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         //Приём параметров
-        //Map<String, String[]> parameterMap = req.getParameterMap();
-        //System.out.println(parameterMap);
+        Map<String, String[]> parameterMap = req.getParameterMap();
+        System.out.println(parameterMap);
 
         //Обработка Body-request
         try (BufferedReader reader = req.getReader();
