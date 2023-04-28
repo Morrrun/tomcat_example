@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 //Аннотация что-бы связать определенный путь с нашим Servlet-ом
 @WebServlet("/first")
@@ -39,6 +40,13 @@ public class FirstServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //Получаем параметр по значению
+        String param = req.getParameter("param");
+
+        //Получаем все параметры
+        Map<String, String[]> parameterMap = req.getParameterMap();
+
+        System.out.println();
         //Получение заголовков request-а.
         //User-Agent позволяет получить информацию по устройству с которого был передан request
         req.getHeader("user-agent");
