@@ -29,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 @WebServlet("/download")
 public class DownloadServlet extends HttpServlet {
 
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         resp.setHeader("content-disposition", "attachment; filename=\"filename.txt\"");
